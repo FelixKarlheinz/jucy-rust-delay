@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-latest]
+        os: [windows-latest]
 
     steps:
       - name: Checkout repository
@@ -47,15 +47,11 @@ jobs:
 
       # ---------- Configure ----------
       - name: Configure CMake
-        run: |
-          cmake -S . -B build \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_GENERATOR=Ninja
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -G Ninja
 
       # ---------- Build ----------
       - name: Build
-        run: |
-          cmake --build build --config Release
+        run: cmake --build build --config Release
 
       # ---------- Collect artefacts ----------
       - name: Upload VST3
