@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest]
+        os: [windows-latest, macos-latest]
 
     steps:
       - name: Checkout repository
@@ -44,6 +44,12 @@ jobs:
       - name: Setup MSVC
         if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
+
+      # ---------- macOS deps ----------
+      - name: Install macOS dependencies
+        if: runner.os == 'macOS'
+        run: |
+          brew install ninja
 
       # ---------- Configure ----------
       - name: Configure CMake
