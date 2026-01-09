@@ -1,0 +1,20 @@
+repos:
+  - repo: https://github.com/cpp-linter/cpp-linter-hooks
+    rev: v1.1.11 # Use the tag or commit you want
+    hooks:
+      - id: clang-format
+        exclude: ^(build|JUCE|rust_delay)/
+        args: [--style=Google] # Other coding style: LLVM, GNU, Chromium, Microsoft, Mozilla, WebKit.
+  - repo: https://github.com/FeryET/pre-commit-rust
+    rev: v1.2.1
+    hooks:
+      - id: fmt
+        pass_filenames: false
+        args:
+          - --manifest-path
+          - rust_delay/Cargo.toml
+      - id: cargo-check
+        pass_filenames: false
+        args:
+          - --manifest-path
+          - rust_delay/Cargo.toml
