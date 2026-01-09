@@ -1,0 +1,14 @@
+[package]
+name = "rust_delay"
+version = "0.1.0"
+authors = ["Felix Weiss <felixkarlheinzweiss@zohomail.eu>"]
+edition = "2024"
+
+[dependencies]
+cxx = "1.0"
+
+[build-dependencies]
+cxx-build = "1.0"
+
+[lib]
+crate-type = ["staticlib"]
