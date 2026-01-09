@@ -1,0 +1,67 @@
+name: Build VST3
+
+on:
+  push:
+    branches: [feat/github-workflow]
+  pull_request:
+    branches: [feat/github-workflow]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build VST3 (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      # ---------- Rust ----------
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: cargo-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+
+      # ---------- CMake ----------
+      - name: Install CMake
+        uses: lukka/get-cmake@v3.29.2
+
+      # ---------- Windows deps ----------
+      - name: Setup MSVC
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      # ---------- Configure ----------
+      - name: Configure CMake
+        run: |
+          cmake -S . -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_GENERATOR=Ninja
+
+      # ---------- Build ----------
+      - name: Build
+        run: |
+          cmake --build build --config Release
+
+      # ---------- Collect artefacts ----------
+      - name: Upload VST3
+        uses: actions/upload-artifact@v4
+        with:
+          name: JucyRustDelay-VST3-${{ runner.os }}
+          path: |
+            build/**/JucyRustDelay.vst3
+            build/**/JucyRustDelay.vst3/**
