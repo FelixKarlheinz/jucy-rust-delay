@@ -1,4 +1,8 @@
+<img width="581" height="347" alt="JucyRustDelay" src="https://github.com/user-attachments/assets/ed0f533b-3600-4bfc-8837-0e8c24496938" />
+
 # JucyRustDelay
+
+
 
 A small experimental audio plugin exploring **Rust-based DSP integrated into a JUCE plugin**.
 
