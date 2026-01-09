@@ -1,0 +1,6 @@
+# folders
+
+build/*
+.cache/
+.zed/
+rust_delay/target/
