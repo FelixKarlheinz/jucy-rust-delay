@@ -2,9 +2,9 @@ name: Build VST3
 
 on:
   push:
-    branches: [feat/github-workflow]
+    branches: [main]
   pull_request:
-    branches: [feat/github-workflow]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
